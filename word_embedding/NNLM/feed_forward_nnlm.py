@@ -6,8 +6,8 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import Dataset
 from tqdm.auto import tqdm
-from NNLM.utils import BOS_TOKEN, EOS_TOKEN
-from NNLM.utils import load_reuters, save_pretrained, get_loader, init_weights
+from word_embedding.NNLM.utils import BOS_TOKEN, EOS_TOKEN
+from word_embedding.NNLM.utils import load_reuters, save_pretrained, get_loader, init_weights
 
 class NGramDataset(Dataset):
     def __init__(self, corpus, vocab, context_size=2):
@@ -19,7 +19,7 @@ class NGramDataset(Dataset):
             sentence = [self.bos] + sentence + [self.eos]
             if len(sentence) < context_size:
                 continue
-            for i in range(context_size, len(sentence)):
+            for i in range(context_size, len(sentence)): # 对于每句话只截取前context长度的字
                 # 模型输入：长为context_size的上文
                 context = sentence[i-context_size:i]
                 # 模型输出：当前词
@@ -61,7 +61,7 @@ class FeedForwardNNLM(nn.Module):
         return log_probs
 
 embedding_dim = 64
-context_size = 2
+context_size = 2 # 文本长度
 hidden_dim = 128
 batch_size = 1024
 num_epoch = 10

@@ -7,8 +7,9 @@ import torch.optim as optim
 from torch.utils.data import Dataset
 from torch.nn.utils.rnn import pad_sequence
 from tqdm.auto import tqdm
-from NNLM.utils import BOS_TOKEN, EOS_TOKEN, PAD_TOKEN
-from NNLM.utils import load_reuters, save_pretrained, get_loader, init_weights
+from word_embedding.NNLM.utils import BOS_TOKEN, EOS_TOKEN, PAD_TOKEN
+from word_embedding.NNLM.utils import load_reuters, save_pretrained, get_loader
+
 
 class RnnlmDataset(Dataset):
     def __init__(self, corpus, vocab):
